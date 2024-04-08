@@ -6,6 +6,7 @@ import Signup from "./pages/authentication/Signup";
 import Signin from "./pages/authentication/Signin";
 import AuthProvider from "./hoc/AuthProvider";
 import SnippetEditor from "./components/snippet-editor/SnippetEditor";
+import MySnippets from "./components/my-snippets/MySnippets";
 
 function App() {
   return (
@@ -20,6 +21,14 @@ function App() {
           element={
             <AuthProvider>
               <SnippetEditor />
+            </AuthProvider>
+          }
+        />
+        <Route
+          path="/my-snippets"
+          element={
+            <AuthProvider>
+              <MySnippets />
             </AuthProvider>
           }
         />
