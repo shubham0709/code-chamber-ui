@@ -9,7 +9,7 @@ const Toolbar = ({ handleClickCopyContent, handleClickCopyLink, handleClickDownl
           <ContentCopy />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Share">
+      <Tooltip title="Copy Link">
         <IconButton onClick={handleClickCopyLink}>
           <Share />
         </IconButton>

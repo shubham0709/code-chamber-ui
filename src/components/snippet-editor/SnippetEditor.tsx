@@ -11,7 +11,8 @@ import { io } from "socket.io-client";
 import { baseURL } from "../../Redux/App/app.actions";
 import { useSelector } from "react-redux";
 import { rootStateType } from "../../Redux/Store";
-import { debounce } from "../../utils";
+import { debounce, downloadFileWithExtension } from "../../utils";
+import { Settings } from "@mui/icons-material";
 
 const socket = io(baseURL);
 
@@ -68,9 +69,32 @@ const SnippetEditor = () => {
     debouncedEmitTitle(value);
   };
 
-  const handleClickCopyContent = () => {};
-  const handleClickCopyLink = () => {};
-  const handleClickDownloadFile = () => {};
+  const handleClickCopyContent = async () => {
+    await navigator.clipboard.writeText(snippet.content);
+  };
+  const handleClickCopyLink = async () => {
+    const baseURL = window.location.origin; // Dynamically get the current website's base URL
+    const snippetId = snippet._id; // Assuming snippet._id contains the unique identifier
+
+    // Construct the complete URL
+    const url = `${baseURL}/snippet/${snippetId}`;
+
+    // Copy the URL to the clipboard
+    try {
+      await navigator.clipboard.writeText(url);
+      console.log("URL copied to clipboard:", url);
+    } catch (error) {
+      console.error("Failed to copy URL to clipboard:", error);
+    }
+  };
+
+  const handleClickDownloadFile = () => {
+    console.log({ snippet });
+    const language = snippet.settings.language;
+    const content = snippet.content;
+    console.log({ language, content });
+    downloadFileWithExtension(language, content);
+  };
 
   const addSocketListeners = useCallback(() => {
     socket.on("connect", () => {

@@ -30,3 +30,7 @@ export const handleCreateCodeSnippet = (dispatch: Dispatch) => {
 export const getSnippetById = (id: string) => {
   return axiosInstance().get(`/snippet/${id}`);
 };
+
+export const getMySnippets = () => {
+  return axiosInstance().get(`/snippet/my-snippets`);
+};

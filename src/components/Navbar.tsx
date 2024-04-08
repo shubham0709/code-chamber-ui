@@ -1,5 +1,5 @@
-import { Code, Logout, Person } from "@mui/icons-material";
-import { Button, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
+import { Code, History, Logout, Person } from "@mui/icons-material";
+import { Button, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -34,6 +34,10 @@ const Navbar = () => {
     logoutAPI(dispatch);
   };
 
+  const handleClickMySnippets = () => {
+    navigate("/my-snippets");
+  };
+
   return (
     <div className="bg-dark-2 h-[60px] flex flex-row justify-left items-center p-2">
       <div className="flex flex-row justify-between items-center gap-2 w-full">
@@ -41,12 +45,15 @@ const Navbar = () => {
           className="flex flex-row justify-between items-center cursor-pointer  gap-2"
           onClick={handleGoToHomePage}
         >
-          <Code sx={{ fontSize: "25px" }} />
+          <Code />
           <p className="text-xl">Code Chamber</p>
         </div>
         <LiveClock />
         {isAuth && (
-          <div className="flex flex-row justify-left items-center gap-1 mr-2">
+          <div className="flex flex-row justify-left items-center gap-2 mr-2">
+            <Button startIcon={<History sx={{ color: "white" }} />} onClick={handleClickMySnippets}>
+              My Snippets
+            </Button>
             <div>
               <Button
                 id="basic-button"
@@ -56,7 +63,7 @@ const Navbar = () => {
                 onClick={handleClick}
               >
                 <div className="flex flex-row justify-left items-center">
-                  <Person sx={{ color: "#fff", fontSize: "30px" }} />
+                  <Person sx={{ color: "#fff" }} />
                   <p className="ml-2">{user?.firstName}</p>
                   <p className="ml-1">{user?.lastName}</p>
                 </div>
@@ -81,7 +88,7 @@ const Navbar = () => {
           </div>
         )}
         {!isAuth && showAuthButtons && (
-          <div className="flex flex-row justify-left items-center gap-4">
+          <div className="flex flex-row justify-left items-center gap-3">
             <Link to={"/auth/signin"}>
               <Button>
                 <p className="">Sign In</p>
