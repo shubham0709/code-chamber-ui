@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 
 export const baseURL = "http://localhost:5002";
 
-const token = JSON.parse(localStorage.getItem("token") || "null");
+const token = JSON.parse(localStorage.getItem("token"));
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
