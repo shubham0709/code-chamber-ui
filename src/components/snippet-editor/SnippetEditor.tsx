@@ -9,12 +9,14 @@ import { SelectChangeEvent } from "@mui/material";
 
 import { io } from "socket.io-client";
 import { baseURL } from "../../Redux/App/app.actions";
+import { useSelector } from "react-redux";
+import { rootStateType } from "../../Redux/Store";
 
 const socket = io(baseURL);
 
 const SnippetEditor = () => {
   const { id } = useParams();
-  const authToken = localStorage.getItem("token");
+  const authToken = useSelector((state: rootStateType) => state.auth.token);
   const [isLoading, setIsloading] = useState<boolean>(false);
   const [error, setError] = useState<AxiosError | null>(null);
   const [snippet, setSnippet] = useState(null);
@@ -40,11 +42,8 @@ const SnippetEditor = () => {
       token: authToken,
       snippetId: id,
       settings: {
-        ...snippet,
-        settings: {
-          ...snippet.settings,
-          [name]: value,
-        },
+        ...snippet.settings,
+        [name]: value,
       },
     });
   };
