@@ -1,6 +1,29 @@
 import * as types from "./app.actionTypes";
 
-const initialState = {
+export interface appInitialStateType {
+  createSnippet: {
+    isLoading: boolean;
+    isSuccess: boolean;
+    isError: boolean;
+    isErrorMessage: string;
+  };
+  allSnippets: {
+    isLoading: boolean;
+    isSuccess: boolean;
+    isError: boolean;
+    isErrorMessage: string;
+    data: any;
+  };
+  editSnippet: {
+    isLoading: boolean;
+    isSuccess: boolean;
+    isError: boolean;
+    isErrorMessage: string;
+    data: any;
+  };
+}
+
+const initialState: appInitialStateType = {
   createSnippet: {
     isLoading: false,
     isSuccess: false,
@@ -23,12 +46,12 @@ const initialState = {
   },
 };
 
-interface reducerParams {
+export interface appReducerParams {
   type: string;
   payload?: any;
 }
 
-export const app = (state = initialState, action: reducerParams) => {
+export const app = (state = initialState, action: appReducerParams): appInitialStateType => {
   const type = action.type;
   const payload = action.payload;
 

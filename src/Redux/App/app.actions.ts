@@ -14,7 +14,7 @@ const axiosInstance = axios.create({
   },
 });
 
-export const handleCreateCodeSnippet = () => (dispatch: Dispatch) => {
+export const handleCreateCodeSnippet = (dispatch: Dispatch) => {
   dispatch({ type: types.CREATE_SNIPPET_LOADING });
   return axiosInstance
     .post("/snippet")
@@ -26,6 +26,6 @@ export const handleCreateCodeSnippet = () => (dispatch: Dispatch) => {
     );
 };
 
-export const getSnippetById = (id: string) => (dispatch: Dispatch) => {
+export const getSnippetById = (id: string) => {
   return axiosInstance.get(`/snippet/${id}`);
 };

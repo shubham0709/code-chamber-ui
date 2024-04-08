@@ -4,15 +4,17 @@ import * as types from "./auth.actionTypes";
 import { baseURL } from "../App/app.actions";
 
 interface User {
+  firstName?: string;
+  lastName?: string;
   email: string;
   password: string;
 }
 
-export const logoutAPI = () => (dispatch: Dispatch) => {
+export const logoutAPI = (dispatch: Dispatch) => {
   dispatch({ type: types.USER_LOGOUT });
 };
 
-export const registerAPI = (user: User) => async (dispatch: Dispatch) => {
+export const registerAPI = async (user: User, dispatch: Dispatch) => {
   dispatch({ type: types.USER_REGISTER_LOADING });
   return axios
     .post(`${baseURL}/auth/signup`, user)
@@ -22,7 +24,7 @@ export const registerAPI = (user: User) => async (dispatch: Dispatch) => {
     .catch((err: AxiosError) => dispatch({ type: types.USER_REGISTER_FAILURE, payload: err }));
 };
 
-export const loginAPI = (user: User) => async (dispatch: Dispatch) => {
+export const loginAPI = async (user: User, dispatch: Dispatch) => {
   dispatch({ type: types.USER_LOGIN_LOADING });
 
   return axios

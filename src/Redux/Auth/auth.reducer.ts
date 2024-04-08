@@ -1,17 +1,13 @@
 import * as types from "./auth.actionTypes";
 
 interface User {
-  isAuth: boolean;
-  token: string;
-  user: {
-    email: string;
-    firstName: string;
-    lastName: string;
-    _id: string;
-  };
+  email: string;
+  firstName: string;
+  lastName: string;
+  _id: string;
 }
 
-interface AuthState {
+export interface authInitialStateType {
   user: User | null;
   token: string | null;
   isAuth: boolean;
@@ -37,7 +33,7 @@ const isAuth: boolean = isAuthString ? JSON.parse(isAuthString) : false;
 const user: User | null = userString ? JSON.parse(userString) : null;
 const token: string | null = tokenString ? JSON.parse(tokenString) : null;
 
-const initialState: AuthState = {
+const initialState: authInitialStateType = {
   user,
   token,
   isAuth,
@@ -56,12 +52,12 @@ const initialState: AuthState = {
   },
 };
 
-interface reducerParams {
+export interface authReducerParams {
   type: string;
   payload: any;
 }
 
-export const auth = (state = initialState, { type, payload }: reducerParams) => {
+export const auth = (state = initialState, { type, payload }: authReducerParams) => {
   switch (type) {
     case types.USER_REGISTER_LOADING:
       return {

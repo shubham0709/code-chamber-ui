@@ -3,10 +3,8 @@ import { useParams } from "react-router-dom";
 import CodeEditor from "../code-editor/CodeEditor";
 import SettingsEditor from "../code-editor/settings-editor/SettingsEditor";
 import Toolbar from "../code-editor/toolbar/Toolbar";
-import { useDispatch } from "react-redux";
 import { getSnippetById } from "../../Redux/App/app.actions";
 import { AxiosError } from "axios";
-import { useSocket } from "../../hooks/useSocket";
 import { SelectChangeEvent } from "@mui/material";
 
 import { io } from "socket.io-client";
@@ -16,11 +14,12 @@ const socket = io(baseURL);
 
 const SnippetEditor = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
   const authToken = localStorage.getItem("token");
   const [isLoading, setIsloading] = useState<boolean>(false);
   const [error, setError] = useState<AxiosError | null>(null);
   const [snippet, setSnippet] = useState(null);
+
+  console.log({ isLoading, error });
 
   const handleChangeContent = (content: string | undefined) => {
     setSnippet((prev) => ({ ...prev, content }));
@@ -50,8 +49,8 @@ const SnippetEditor = () => {
     });
   };
 
-  const handleChangeTitle = (titleChangeEvent: React.ChangeEvent) => {
-    let { name, value } = titleChangeEvent.target;
+  const handleChangeTitle = (titleChangeEvent: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = titleChangeEvent.target;
     setSnippet((prev) => ({ ...prev, title: value }));
     socket.emit("editTitle", { token: authToken, snippetId: id, title: value });
   };
@@ -95,7 +94,7 @@ const SnippetEditor = () => {
   useEffect(() => {
     if (id) {
       setIsloading(() => true);
-      dispatch(getSnippetById(id))
+      getSnippetById(id)
         .then((res) => {
           setSnippet(() => res.data);
           setIsloading(() => false);

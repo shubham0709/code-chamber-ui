@@ -1,6 +1,5 @@
 import { ContentCopy, GetApp, Share } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
-import React from "react";
 
 const Toolbar = ({ handleClickCopyContent, handleClickCopyLink, handleClickDownloadFile }) => {
   return (

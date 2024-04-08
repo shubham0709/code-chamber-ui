@@ -2,25 +2,30 @@ import { Avatar, Button, TextField, Grid, Box, Typography, Container } from "@mu
 import CssBaseline from "@mui/material/CssBaseline";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import { HourglassEmpty } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { registerAPI } from "../../Redux/Auth/auth.action";
+import { rootStateType } from "../../Redux/Store";
 
 export default function Signup() {
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.auth.register.isLoading);
+  const isLoading = useSelector((state: rootStateType) => state.auth.register.isLoading);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUser((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const user = {
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-      email: data.get("email"),
-      password: data.get("password"),
-    };
-    dispatch(registerAPI(user));
+    registerAPI(user, dispatch);
   };
 
   return (
@@ -51,6 +56,7 @@ export default function Signup() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -61,6 +67,7 @@ export default function Signup() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -71,6 +78,7 @@ export default function Signup() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -82,6 +90,7 @@ export default function Signup() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                onChange={handleChange}
               />
             </Grid>
           </Grid>

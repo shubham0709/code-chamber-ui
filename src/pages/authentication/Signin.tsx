@@ -16,6 +16,7 @@ import { loginAPI } from "../../Redux/Auth/auth.action";
 import { AxiosError } from "axios";
 import * as types from "../../Redux/Auth/auth.actionTypes";
 import { HourglassEmpty } from "@mui/icons-material";
+import { rootStateType } from "../../Redux/Store";
 
 interface SigninFormData {
   email: string;
@@ -24,7 +25,7 @@ interface SigninFormData {
 
 const Signin: React.FC = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.auth.login.isLoading);
+  const isLoading = useSelector((state: rootStateType) => state.auth.login.isLoading);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<SigninFormData>({
@@ -34,7 +35,7 @@ const Signin: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(loginAPI(formData))
+    loginAPI(formData, dispatch)
       .then((res) => {
         switch (res.type) {
           case types.USER_LOGIN_SUCCESS: {

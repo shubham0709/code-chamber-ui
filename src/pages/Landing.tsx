@@ -5,20 +5,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { handleCreateCodeSnippet } from "../Redux/App/app.actions";
 import { CREATE_SNIPPET_SUCCESS } from "../Redux/App/app.actionTypes";
+import { rootStateType } from "../Redux/Store";
 
 const Landing = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const isAuth = useSelector((state) => state.auth.isAuth);
-  const createSnippetLoading = useSelector((state) => state.app.createSnippet.isLoading);
+  const isAuth = useSelector((state: rootStateType) => state.auth.isAuth);
+  const createSnippetLoading = useSelector(
+    (state: rootStateType) => state.app.createSnippet.isLoading
+  );
 
   const handleClickShareCodeNow = () => {
     if (!isAuth) {
       navigate("/auth/signin");
       return;
     }
-    dispatch(handleCreateCodeSnippet()).then((res) => {
+    handleCreateCodeSnippet(dispatch).then((res) => {
       console.log({ res });
       if (res.type === CREATE_SNIPPET_SUCCESS) {
         navigate(`/snippet/${res.payload._id}`);

@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logoutAPI } from "../Redux/Auth/auth.action";
 import LiveClock from "./live-clock/LiveClock";
+import { rootStateType } from "../Redux/Store";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isAuth = useSelector((state) => state.auth.isAuth);
-  const user = useSelector((state) => state.auth.user);
+  const isAuth = useSelector((state: rootStateType) => state.auth.isAuth);
+  const user = useSelector((state: rootStateType) => state.auth.user);
 
   const handleGoToHomePage = () => {
     navigate("/");
@@ -30,7 +31,7 @@ const Navbar = () => {
 
   const handleClickLogout = () => {
     handleClose();
-    dispatch(logoutAPI());
+    logoutAPI(dispatch);
   };
 
   return (
@@ -56,8 +57,8 @@ const Navbar = () => {
               >
                 <div className="flex flex-row justify-left items-center">
                   <Person sx={{ color: "#fff", fontSize: "30px" }} />
-                  <p className="ml-2">{user.firstName}</p>
-                  <p className="ml-1">{user.lastName}</p>
+                  <p className="ml-2">{user?.firstName}</p>
+                  <p className="ml-1">{user?.lastName}</p>
                 </div>
               </Button>
               <Menu
