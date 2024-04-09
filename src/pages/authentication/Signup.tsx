@@ -9,13 +9,16 @@ import { registerAPI } from "../../Redux/Auth/auth.action";
 import { rootStateType } from "../../Redux/Store";
 import { USER_REGISTER_SUCCESS } from "../../Redux/Auth/auth.actionTypes";
 
+import { ToastContainer, toast } from "react-toastify";
+
 export default function Signup() {
-  const [user, setUser] = useState({
+  const newUserInitialState = {
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-  });
+  };
+  const [user, setUser] = useState(newUserInitialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoading = useSelector((state: rootStateType) => state.auth.register.isLoading);
@@ -30,17 +33,29 @@ export default function Signup() {
     registerAPI(user, dispatch)
       .then((res) => {
         if (res.type === USER_REGISTER_SUCCESS) {
-          navigate("/auth/login");
+          setTimeout(() => {
+            navigate("/auth/signin");
+          }, 1000);
+          toast.success("User registered successfully", {
+            theme: "dark",
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: true,
+          });
         }
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setUser(newUserInitialState);
       });
   };
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <ToastContainer />
       <Box
         sx={{
           marginTop: 8,

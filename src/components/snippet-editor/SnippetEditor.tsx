@@ -12,7 +12,6 @@ import { baseURL } from "../../Redux/App/app.actions";
 import { useSelector } from "react-redux";
 import { rootStateType } from "../../Redux/Store";
 import { debounce, downloadFileWithExtension } from "../../utils";
-import { Settings } from "@mui/icons-material";
 
 const socket = io(baseURL);
 

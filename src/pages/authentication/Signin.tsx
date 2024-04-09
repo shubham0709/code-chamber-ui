@@ -14,9 +14,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAPI } from "../../Redux/Auth/auth.action";
 import { AxiosError } from "axios";
-import * as types from "../../Redux/Auth/auth.actionTypes";
 import { HourglassEmpty } from "@mui/icons-material";
 import { rootStateType } from "../../Redux/Store";
+
+import { ToastContainer, toast } from "react-toastify";
+import { USER_LOGIN_SUCCESS } from "../../Redux/Auth/auth.actionTypes";
 
 interface SigninFormData {
   email: string;
@@ -38,17 +40,24 @@ const Signin: React.FC = () => {
     event.preventDefault();
     loginAPI(formData, dispatch)
       .then((res) => {
-        switch (res.type) {
-          case types.USER_LOGIN_SUCCESS: {
+        console.log({ res });
+        if (res.type === USER_LOGIN_SUCCESS) {
+          setTimeout(() => {
             navigate(state?.from || "/");
-            break;
-          }
-          case types.USER_LOGIN_FAILURE: {
-            // Handle failure if needed
-            break;
-          }
-          default:
-            break;
+          }, 1000);
+          toast.success("User logged-in successfully", {
+            theme: "dark",
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: true,
+          });
+        } else {
+          toast.error(res.payload.response.data, {
+            theme: "dark",
+            position: "bottom-right",
+            autoClose: 1500,
+            hideProgressBar: true,
+          });
         }
       })
       .catch((err: AxiosError) => {
@@ -66,6 +75,7 @@ const Signin: React.FC = () => {
 
   return (
     <Container component="main" maxWidth="xs">
+      <ToastContainer />
       <CssBaseline />
       <Box
         sx={{
