@@ -18,7 +18,7 @@ const CodeEditor = ({
   return (
     <MonacoEditor
       height={height}
-      defaultLanguage={"javascript"}
+      defaultLanguage={language}
       language={language}
       theme="vs-dark" // Set the dark theme
       value={value}
