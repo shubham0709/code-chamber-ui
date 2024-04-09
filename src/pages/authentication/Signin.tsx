@@ -9,7 +9,7 @@ import {
   Typography,
   Container,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAPI } from "../../Redux/Auth/auth.action";
@@ -27,6 +27,7 @@ const Signin: React.FC = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state: rootStateType) => state.auth.login.isLoading);
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   const [formData, setFormData] = useState<SigninFormData>({
     email: "",
@@ -39,8 +40,7 @@ const Signin: React.FC = () => {
       .then((res) => {
         switch (res.type) {
           case types.USER_LOGIN_SUCCESS: {
-            console.log({ res });
-            navigate("/");
+            navigate(state?.from || "/");
             break;
           }
           case types.USER_LOGIN_FAILURE: {
