@@ -105,7 +105,7 @@ const SnippetEditor = () => {
     });
 
     if (id) {
-      socket.emit("joinRoom", { snippetId: id });
+      socket.emit("joinRoom", { token: authToken, snippetId: id });
       socket.on("contentChanged", ({ snippetId, content }) => {
         setSnippet((prev) => ({ ...prev, content }));
         console.log({ snippetId, content });
@@ -118,6 +118,10 @@ const SnippetEditor = () => {
         setSnippet((prev) => ({ ...prev, settings }));
         console.log({ snippetId, settings });
       });
+
+      socket.on("activeUsersUpdated", (data) => {
+        console.log({ activeUsers: { data } });
+      });
     }
 
     return () => {
@@ -125,7 +129,7 @@ const SnippetEditor = () => {
       socket.off("disconnect");
       // Remove event listeners here
     };
-  }, [id]);
+  }, [id, authToken]);
 
   useEffect(() => {
     if (id) {
