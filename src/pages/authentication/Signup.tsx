@@ -1,12 +1,13 @@
 import { Avatar, Button, TextField, Grid, Box, Typography, Container } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { HourglassEmpty } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { registerAPI } from "../../Redux/Auth/auth.action";
 import { rootStateType } from "../../Redux/Store";
+import { USER_REGISTER_SUCCESS } from "../../Redux/Auth/auth.actionTypes";
 
 export default function Signup() {
   const [user, setUser] = useState({
@@ -16,6 +17,7 @@ export default function Signup() {
     password: "",
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isLoading = useSelector((state: rootStateType) => state.auth.register.isLoading);
 
   const handleChange = (event) => {
@@ -25,7 +27,15 @@ export default function Signup() {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    registerAPI(user, dispatch);
+    registerAPI(user, dispatch)
+      .then((res) => {
+        if (res.type === USER_REGISTER_SUCCESS) {
+          navigate("/auth/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
