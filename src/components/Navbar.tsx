@@ -42,15 +42,17 @@ const Navbar = () => {
     <div className="bg-dark-2 h-[60px] flex flex-row justify-left items-center p-2">
       <div className="flex flex-row justify-between items-center gap-2 w-full">
         <div
-          className="flex flex-row justify-between items-center cursor-pointer  gap-2"
+          className="flex flex-row justify-left items-center cursor-pointer gap-2 w-1/3"
           onClick={handleGoToHomePage}
         >
           <Code />
           <p className="text-xl">Code Chamber</p>
         </div>
-        <LiveClock />
+        <div className="w-1/3 flex flex-row justify-center items-center">
+          <LiveClock />
+        </div>
         {isAuth && (
-          <div className="flex flex-row justify-left items-center gap-2 mr-2">
+          <div className="flex flex-row justify-end items-center gap-2 mr-2 w-1/3">
             <Button startIcon={<History sx={{ color: "white" }} />} onClick={handleClickMySnippets}>
               My Snippets
             </Button>
@@ -88,7 +90,7 @@ const Navbar = () => {
           </div>
         )}
         {!isAuth && showAuthButtons && (
-          <div className="flex flex-row justify-left items-center gap-3">
+          <div className="flex flex-row justify-end items-center gap-3 w-1/3">
             <Link to={"/auth/signin"}>
               <Button>
                 <p className="">Sign In</p>
