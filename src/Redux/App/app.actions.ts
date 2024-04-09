@@ -2,8 +2,8 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import * as types from "./app.actionTypes";
 import { Dispatch } from "redux";
 
-export const baseURL = "https://code-chamber-backend.onrender.com";
-// export const baseURL = "http://localhost:5002";
+// export const baseURL = "https://code-chamber-backend.onrender.com";
+export const baseURL = "http://localhost:5002";
 
 const axiosInstance = () => {
   return axios.create({

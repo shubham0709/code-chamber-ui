@@ -7,7 +7,7 @@ import { HourglassEmpty } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { registerAPI } from "../../Redux/Auth/auth.action";
 import { rootStateType } from "../../Redux/Store";
-import { USER_REGISTER_SUCCESS } from "../../Redux/Auth/auth.actionTypes";
+import { USER_REGISTER_FAILURE, USER_REGISTER_SUCCESS } from "../../Redux/Auth/auth.actionTypes";
 
 import { ToastContainer, toast } from "react-toastify";
 
@@ -39,16 +39,20 @@ export default function Signup() {
           toast.success("User registered successfully", {
             theme: "dark",
             position: "bottom-right",
-            autoClose: 1000,
+            autoClose: 2000,
+            hideProgressBar: true,
+          });
+        } else if (res.type === USER_REGISTER_FAILURE) {
+          toast.error(res.payload.response.data, {
+            theme: "dark",
+            position: "bottom-right",
+            autoClose: 2000,
             hideProgressBar: true,
           });
         }
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {
-        setUser(newUserInitialState);
       });
   };
 
@@ -74,7 +78,6 @@ export default function Signup() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="given-name"
                 name="firstName"
                 required
                 fullWidth
@@ -91,7 +94,6 @@ export default function Signup() {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
-                autoComplete="family-name"
                 onChange={handleChange}
               />
             </Grid>
@@ -102,7 +104,6 @@ export default function Signup() {
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
                 onChange={handleChange}
               />
             </Grid>
@@ -114,7 +115,6 @@ export default function Signup() {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="new-password"
                 onChange={handleChange}
               />
             </Grid>
