@@ -105,12 +105,12 @@ const MySnippets = () => {
         <DialogTitle id="alert-dialog-title" className="bg-dark-1">
           {"Are you sure want to delete the snippet?"}
         </DialogTitle>
-        <DialogContent className="bg-dark-2">
+        <DialogContent className="bg-dark-1">
           <DialogContentText id="alert-dialog-description">
             You cannot recover a deleted snippet.
           </DialogContentText>
         </DialogContent>
-        <DialogActions className="bg-dark-2">
+        <DialogActions className="bg-dark-1">
           <Button disabled={deleteLoading} color="error" onClick={handleClickCancelDelete}>
             Cancel
           </Button>
